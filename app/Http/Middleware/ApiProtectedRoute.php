@@ -18,7 +18,7 @@ class ApiProtectedRoute extends BaseMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        try {
+        /* try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
@@ -28,7 +28,7 @@ class ApiProtectedRoute extends BaseMiddleware
             } else {
                 return response()->json(['message' => 'Token not found']);
             }
-        }
+        } */
         return $next($request);
     }
 }
