@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['apiJwt']], function(){
     Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+    Route::post('store', [App\Http\Controllers\ProductController::class, 'store']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
