@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['apiJwt']], function(){
     Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-    Route::post('store', [App\Http\Controllers\ProductController::class, 'store']);
+    Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
+    Route::post('products', [App\Http\Controllers\ProductController::class, 'store']);
+    Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update']);
+    Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy']);
+    Route::post('jsonUpload', [App\Http\Controllers\ProductController::class, 'jsonUpload']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
