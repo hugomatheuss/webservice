@@ -3,24 +3,17 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 class ApiProtectedRoute extends BaseMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        /* try {
+        try {
             $user = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
+            if(!$user) throw new \Exception('User Not Found');
+        }  catch (\Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json(['message' => 'Invalid token']);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
@@ -28,7 +21,7 @@ class ApiProtectedRoute extends BaseMiddleware
             } else {
                 return response()->json(['message' => 'Token not found']);
             }
-        } */
+        } 
         return $next($request);
     }
 }

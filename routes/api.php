@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 
 Route::group(['middleware' => ['apiJwt']], function(){
-    Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-    Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
+    Route::get('products', [App\Http\Controllers\ProductController::class, 'index']);
+    Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show']);
     Route::post('products', [App\Http\Controllers\ProductController::class, 'store']);
     Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update']);
     Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy']);
