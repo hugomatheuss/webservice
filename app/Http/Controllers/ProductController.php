@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ProductResource;
@@ -39,7 +39,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return Product::find($product);
+        return (new ProductResource(Product::find($product)));
     }
 
     public function destroy(Product $product)
@@ -50,14 +50,16 @@ class ProductController extends Controller
     }
 
     public function jsonUpload(Request $request)
-    {   var_dump("OI");
-        /* $data = $request->validate([
+    {
+        $data = $request->validate([
             'jsonFile' => 'required|file'
-        ]); */
-        $data = $request->all();
-        var_dump($data);
-        exit;
+        ]);
 
-        return $data;
+        $file = $request->file('jsonFile');
+        $filePath = Storage::put('products', $file);
+        $fileName = basename($filePath);
+        
+        
+        return response()->json("uploaded", 201);
     }
 }
