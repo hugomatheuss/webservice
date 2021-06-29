@@ -55,11 +55,12 @@ class ProductController extends Controller
             'jsonFile' => 'required|file'
         ]);
 
-        $file = $request->file('jsonFile');
-        $filePath = Storage::put('products', $file);
-        $fileName = basename($filePath);
+        $filePath = $request->file('jsonFile')->storeAs(
+            'products', 'products.json'
+        );
+
+        $file = Storage::get($filePath);
         
-        
-        return response()->json("uploaded", 201);
+        return response()->json($file);
     }
 }
