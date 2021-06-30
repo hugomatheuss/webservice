@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
+use App\Jobs\JsonProcess;
 use App\Http\Resources\Product as ProductResource;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        return ProductResource::collection(Product::paginate());
+        return ProductResource::collection(Product::all());
     }
 
     public function store(ProductRequest $request)
@@ -60,7 +61,10 @@ class ProductController extends Controller
         );
 
         $file = Storage::get($filePath);
+        $jsonFile = json_decode($file, true);
         
-        return response()->json($file);
+        JsonProcess::dispatch($jsonFile);
+        
+        return response()->json(null, 200);
     }
 }
