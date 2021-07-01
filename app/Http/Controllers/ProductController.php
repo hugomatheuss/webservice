@@ -24,7 +24,7 @@ class ProductController extends Controller
 
         return (new ProductResource($product))
             -> response()
-            ->setStatusCode(200);
+            ->setStatusCode(201);
     }
 
     public function update(ProductRequest $request, Product $product)
@@ -65,6 +65,6 @@ class ProductController extends Controller
         
         JsonProcess::dispatch($jsonFile);
         
-        return response()->json(null, 200);
+        return response()->json(null, 201);
     }
 }
