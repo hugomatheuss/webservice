@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
-        
+
         $product->update($data);
 
         return (new ProductResource($product))
@@ -40,14 +40,16 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return (new ProductResource(Product::find($product)));
+        return (new ProductResource(Product::find($product)))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return response()->json(null, 204);
+        return response()->json("Deleted!", 200);
     }
 
     public function jsonUpload(Request $request)
@@ -65,6 +67,6 @@ class ProductController extends Controller
         
         JsonProcess::dispatch($jsonFile);
         
-        return response()->json(null, 200);
+        return response()->json("Successful operation", 200);
     }
 }

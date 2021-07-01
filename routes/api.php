@@ -18,6 +18,10 @@ Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 
 Route::group(['middleware' => ['apiJwt']], function(){
+    Route::get('/', function () {
+        return response()->json("PHP Challenge 20201117", 200);
+    });
+
     Route::get('products', [App\Http\Controllers\ProductController::class, 'index']);
     Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show']);
     Route::post('products', [App\Http\Controllers\ProductController::class, 'store']);
