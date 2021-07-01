@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\JsonFileRequest;
 use App\Jobs\JsonProcess;
 use App\Http\Resources\Product as ProductResource;
 
@@ -27,7 +28,7 @@ class ProductController extends Controller
             ->setStatusCode(201);
     }
 
-    public function update(ProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $data = $request->validated();
 
@@ -52,11 +53,9 @@ class ProductController extends Controller
         return response()->json("Deleted!", 200);
     }
 
-    public function jsonUpload(Request $request)
+    public function jsonUpload(JsonFileRequest $request)
     {
-        $data = $request->validate([
-            'jsonFile' => 'required|file'
-        ]);
+        $data = $request->validated();
 
         $filePath = $request->file('jsonFile')->storeAs(
             'products', 'products.json'
