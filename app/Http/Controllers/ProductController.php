@@ -24,7 +24,7 @@ class ProductController extends Controller
         $product = Product::create($data);
 
         return (new ProductResource($product))
-            -> response()
+            ->response()
             ->setStatusCode(201);
     }
 
@@ -50,7 +50,7 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return response()->json("Deleted!", 200);
+        return response()->json("Deleted!", 204);
     }
 
     public function jsonUpload(JsonFileRequest $request)

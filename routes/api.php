@@ -20,12 +20,12 @@ Route::post('register', [App\Http\Controllers\AuthController::class, 'register']
 Route::group(['middleware' => ['apiJwt']], function(){
     Route::get('/', function () {
         return response()->json("PHP Challenge 20201117", 200);
-    });
+    })->name('api.products.home');
 
-    Route::get('products', [App\Http\Controllers\ProductController::class, 'index']);
-    Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show']);
-    Route::post('products', [App\Http\Controllers\ProductController::class, 'store']);
-    Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update']);
+    Route::get('products', [App\Http\Controllers\ProductController::class, 'index'])->name('api.products');
+    Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('api.products.show');
+    Route::post('products', [App\Http\Controllers\ProductController::class, 'store'])->name('api.products.store');
+    Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('api.products.update');
     Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy']);
     Route::post('jsonUpload', [App\Http\Controllers\ProductController::class, 'jsonUpload']);
 });
