@@ -22,11 +22,11 @@ class ProductTest extends TestCase
     /**
     * @test
     */
-    /* public function test_can_list_products() {
+    public function test_can_list_products() {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
 
-        $products = Product::factory()->count(5)->make();
+        $products = Product::factory()->count(5)->create();
 
         $this->withHeaders([
             'Authorization' => 'Bearer '. $token,
@@ -35,17 +35,17 @@ class ProductTest extends TestCase
         ])
             ->json('GET', route('api.products'))
             ->assertStatus(200);
-    } */
+    }
     
     /**
     * @test
     */
-    /* public function test_can_create_product()
+    public function test_can_create_product()
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
 
-        $product = Product::factory()->make();
+        $product = Product::factory()->create();
 
         $this->withHeaders([
             'Authorization' => 'Bearer '. $token,
@@ -53,9 +53,8 @@ class ProductTest extends TestCase
             'Accept' => 'application/json'
         ])
             ->json('POST', route('api.products.store'), $product->toArray())
-            ->assertStatus(201)
-            ->assertJson(["data" => $product->toArray()]);
-    } */
+            ->assertStatus(201);
+    }
 
     /**
     * @test
@@ -65,29 +64,48 @@ class ProductTest extends TestCase
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
 
-        $product = Product::factory()->make();
-        $product->title = "My Title";
+        $product = Product::factory()->create();
 
         $this->withHeaders([
             'Authorization' => 'Bearer '. $token,
             'Content-Type' => 'application/json', 
             'Accept' => 'application/json'
         ])
-            ->json('PUT', route('api.products.update', ['product' => $product->id]), $product->toArray())
+            ->json('PUT', route('api.products.update', ['product' => $product]), $product->toArray())
             ->assertStatus(201);
     }
 
     /**
     * @test
     */
-    /* public function test_can_show_product()
+    public function test_can_show_product()
     {
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
 
-        $product = Product::factory()->make();
+        $this->withHeaders([
+            'Authorization' => 'Bearer '. $token,
+            'Content-Type' => 'application/json', 
+            'Accept' => 'application/json'
+        ])
+            ->json('GET', route('api.products.show', ['product' => 10]))
+            ->assertStatus(200);
+    }
 
-        $this->get(route('api.products.show', ['product' => $product]))
-            ->assertStatus(201);
-    } */
+    /**
+    * @test
+    */
+    public function test_can_delete_product()
+    {
+        $user = User::factory()->create();
+        $token = JWTAuth::fromUser($user);
+
+        $this->withHeaders([
+            'Authorization' => 'Bearer '. $token,
+            'Content-Type' => 'application/json', 
+            'Accept' => 'application/json'
+        ])
+            ->json('DELETE', route('api.products.delete', ['product' => 21]))
+            ->assertStatus(204);
+    }
 }

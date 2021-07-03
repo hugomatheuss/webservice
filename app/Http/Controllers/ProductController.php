@@ -28,10 +28,9 @@ class ProductController extends Controller
             ->setStatusCode(201);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
-
         $product->update($data);
 
         return (new ProductResource($product))

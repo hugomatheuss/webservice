@@ -26,8 +26,8 @@ Route::group(['middleware' => ['apiJwt']], function(){
     Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('api.products.show');
     Route::post('products', [App\Http\Controllers\ProductController::class, 'store'])->name('api.products.store');
     Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('api.products.update');
-    Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy']);
-    Route::post('jsonUpload', [App\Http\Controllers\ProductController::class, 'jsonUpload']);
+    Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('api.products.delete');
+    Route::post('jsonUpload', [App\Http\Controllers\ProductController::class, 'jsonUpload'])->name('api.products.upload');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
