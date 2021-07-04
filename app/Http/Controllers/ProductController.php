@@ -12,6 +12,11 @@ use App\Http\Resources\Product as ProductResource;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        header('Access-Control-Allow-Origin: *');
+    }
+
     public function index()
     {
         return ProductResource::collection(Product::all());
