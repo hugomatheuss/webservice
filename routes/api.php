@@ -18,9 +18,6 @@ Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 
 Route::group(['middleware' => ['apiJwt']], function(){
-    header('Access-Control-Allow-Origin:  *');
-    header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, PATCH, DELETE');
-    header('Access-Control-Allow-Headers: Accept, Content-Type, X-Auth-Token, Origin, Authorization');
     Route::get('/', function () {
         return response()->json("PHP Challenge 20201117", 200);
     })->name('api.products.home');
