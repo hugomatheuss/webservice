@@ -108,4 +108,23 @@ class ProductTest extends TestCase
             ->json('DELETE', route('api.products.delete', ['product' => 21]))
             ->assertStatus(204);
     }
+
+    /**
+    * @test
+    */
+    public function test_can_upload_product()
+    {
+        $user = User::factory()->create();
+        $token = JWTAuth::fromUser($user);
+
+        $file = Storage::get('/app/products/products.json');
+
+        $this->withHeaders([
+            'Authorization' => 'Bearer '. $token,
+            'Content-Type' => 'application/json', 
+            'Accept' => 'application/json'
+        ])
+            ->json('POST', route('api.jsonUpload', $file))
+            ->assertStatus(200);
+    }
 }
