@@ -83,12 +83,14 @@ class ProductTest extends TestCase
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
 
+        $product = Product::factory()->create();
+
         $this->withHeaders([
             'Authorization' => 'Bearer '. $token,
             'Content-Type' => 'application/json', 
             'Accept' => 'application/json'
         ])
-            ->json('GET', route('api.products.show', ['product' => 10]))
+            ->json('GET', route('api.products.show', ['product' => $product]))
             ->assertStatus(200);
     }
 
@@ -100,31 +102,14 @@ class ProductTest extends TestCase
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
 
+        $product = Product::factory()->create();
+
         $this->withHeaders([
             'Authorization' => 'Bearer '. $token,
             'Content-Type' => 'application/json', 
             'Accept' => 'application/json'
         ])
-            ->json('DELETE', route('api.products.delete', ['product' => 21]))
+            ->json('DELETE', route('api.products.delete', ['product' => $product]))
             ->assertStatus(204);
-    }
-
-    /**
-    * @test
-    */
-    public function test_can_upload_product()
-    {
-        $user = User::factory()->create();
-        $token = JWTAuth::fromUser($user);
-
-        $file = Storage::get('/app/products/products.json');
-
-        $this->withHeaders([
-            'Authorization' => 'Bearer '. $token,
-            'Content-Type' => 'application/json', 
-            'Accept' => 'application/json'
-        ])
-            ->json('POST', route('api.jsonUpload', $file))
-            ->assertStatus(200);
     }
 }
